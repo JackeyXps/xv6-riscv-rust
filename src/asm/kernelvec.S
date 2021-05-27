@@ -97,6 +97,9 @@ timervec:
     # scratch[32] : address of CLINT's MTIMECMP register.
     # scratch[40] : desired interval between interrupts.
     
+    # CSRRW(原子读/写CSR)指令原子地交换CSR和整数寄存器中的值.
+    # CSRRW读取CSR的旧值，用0值扩展到XLEN位。然后将其写入整数寄存器rd。rs1中的初始值写入CSR
+    # CSRRW rd, csr, rs1
     csrrw a0, mscratch, a0
     sd a1, 0(a0)
     sd a2, 8(a0)

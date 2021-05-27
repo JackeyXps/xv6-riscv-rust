@@ -18,12 +18,17 @@
 //! PHYSTOP -- end RAM used by the kernel
 
 use super::*;
-
+// CLINT 用来维护与 内存映射 与 软件和时钟中断 有关的状态寄存器
+//CLINT 的每个地址代表一个寄存器
 /// local interrupt controller, which contains the timer.
 pub const CLINT: ConstAddr = ConstAddr(0x2000000);
 pub const CLINT_MAP_SIZE: usize = 0x10000;
+// CLINT_MTIMECMP: 这是一个读写寄存器，保存一个64位的值。每当mtime大于或等于mtimecmp寄存器中的值时，
+// 计时器中断将挂起。定时器中断用于驱动RISC-V核的mip CSR的MTIP位。
 pub const CLINT_MTIMECMP: ConstAddr = CLINT.const_add(0x4000);
-pub const CLINT_MTIME: ConstAddr = CLINT.const_add(0xbff8);
+// mtime 就是计时器，每个tick_time就加一
+// CLINT_MTIME: 保存着当前mtime寄存器的值
+pub const CLINT_MTIME: ConstAddr = CLINT.const_add(0xbff8); 
 
 /// qemu puts UART registers here in physical memory.
 pub const UART0: ConstAddr = ConstAddr(0x10000000);
@@ -42,8 +47,6 @@ pub const PLIC_MAP_SIZE: usize = 0x400000;
 /// the kernel expects there to be RAM
 /// for use by the kernel and user pages
 /// from physical address 0x80000000 to PHYSTOP.
-/// KERNBASE = 0x80000000
-/// PHYSTOP  = 0x88000000
 pub const KERNBASE: ConstAddr = ConstAddr(0x80000000);
 pub const PHYSTOP: ConstAddr = KERNBASE.const_add(128 * 1024 * 1024);
 

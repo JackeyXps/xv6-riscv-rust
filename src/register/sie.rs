@@ -20,6 +20,8 @@ unsafe fn write(x: usize) {
 /// still need to set SIE bit in sstatus
 pub unsafe fn intr_on() {
     let mut sie = read();
+    //如果设置了sip寄存器中的STIP位，则定时器中断将挂起
+    //
     sie |= SSIE | STIE | SEIE;
     write(sie);
 }
