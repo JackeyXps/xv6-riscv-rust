@@ -41,10 +41,12 @@ pub unsafe fn rust_main() -> ! {
         STARTED.store(true, Ordering::SeqCst);
     } else {
         while !STARTED.load(Ordering::SeqCst) {}
-
+        //等待当前cpu初始化完成
         println!("hart {} starting", cpuid);
         kvm_init_hart(); // turn on paging
+        //启用kernelpage table 将kernel数据和代码映射到内存
         trap_init_hart(); // install kernel trap vector
+        //调用kernelvec 处理interrupts和exceptions
         plic::init_hart(cpuid); // ask PLIC for device interrupts
 
         // LTODO - init other things
