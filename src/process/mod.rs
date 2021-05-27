@@ -31,7 +31,7 @@ use trapframe::TrapFrame;
 pub static mut PROC_MANAGER: ProcManager = ProcManager::new();
 
 pub struct ProcManager {
-    table: [Proc; NPROC],
+    table: [Proc; NPROC],// 进程表，最多64个进程
     init_proc: usize,
     pid: SpinLock<usize>,
 }

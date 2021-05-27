@@ -22,6 +22,7 @@ fn foo(layout: Layout) -> ! {
 }
 
 /// Kernel heap allocator
+/// KernelHeap 是一个spinlock，其需要锁住的数据类型是BuddySystem
 pub struct KernelHeap(SpinLock<BuddySystem>);
 
 impl KernelHeap {
@@ -29,6 +30,9 @@ impl KernelHeap {
         Self(SpinLock::new(BuddySystem::uninit(), "kernel heap"))
     }
 
+    /// 调用C库里的方法end()，找到可使用的头地址
+    /// 调用self.init()方法初始化这块地址
+    ///（建立好这块地址的meta区域和unavail区域后，往剩余地址写0）
     pub unsafe fn kinit(&self) {
         extern "C" {
             fn end();
