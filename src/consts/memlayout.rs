@@ -42,6 +42,8 @@ pub const PLIC_MAP_SIZE: usize = 0x400000;
 /// the kernel expects there to be RAM
 /// for use by the kernel and user pages
 /// from physical address 0x80000000 to PHYSTOP.
+/// KERNBASE = 0x80000000
+/// PHYSTOP  = 0x88000000
 pub const KERNBASE: ConstAddr = ConstAddr(0x80000000);
 pub const PHYSTOP: ConstAddr = KERNBASE.const_add(128 * 1024 * 1024);
 
