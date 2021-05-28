@@ -7,17 +7,17 @@ use super::Proc;
 ///     because it will be valid until it calls exit itself
 pub fn load(p: &mut Proc, path: &[u8]) -> Result<(), &'static str> {
     // get relevant inode using path
-    let mut ip = get_inode(path);
+    // let mut ip = get_inode(path);
 
     // check elf header, create new empty pagetable for user
-    ip.check_header();
-    ip.create_pagetable();
+    // ip.check_header();
+    // ip.create_pagetable();
 
     // load each program section
-    p.load(&ip.program);
+    // p.load(&ip.program);
 
     // update the process's info
-    p.update(&ip);
+    // p.update(&ip);
 
     Ok(())
 }
